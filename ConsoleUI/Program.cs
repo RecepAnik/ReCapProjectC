@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -9,22 +10,25 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
+            CarManager carManager = new CarManager(new InMemoryCarDal());
 
-            ProductManager productManager = new ProductManager(new InMemoryProductDal());
+            carManager.Add(new Car
+            { Id = 6, BrandId = 3, ColorId = 3, DailyPrice = 250000, ModelYear = 2021, Description = "Toyata Corolla" });
 
-            foreach (var product in productManager.GetAll()) 
+            foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine(product.ProdcutName);
-
+                Console.WriteLine($"{car.ModelYear} - {car.Description}");
             }
-            Console.WriteLine("---");
 
+            //Car singlecar = carManager.GetById(1);
+            //Console.WriteLine($"{singlecar.ModelYear} - {singlecar.Description}");
 
-            foreach (var product in productManager.GetAll())
-            {
-                Console.WriteLine(product.UnitPrice);
-
-            }
+            //Console.WriteLine($"----Get By All Brand Id------------------------");
+            //foreach (var car in carManager.GetAllByBrandId(1))
+            //{
+            //    Console.WriteLine($"{car.ModelYear} - {car.Description}");
+            //}
+            //Console.WriteLine($"----Get By All Brand Id------------------------");
         }
     }
 }
